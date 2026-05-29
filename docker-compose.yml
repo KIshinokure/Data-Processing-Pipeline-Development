@@ -1,0 +1,17 @@
+﻿version: '3.8'
+
+services:
+  go-collector:
+    build: ./go_collector
+    volumes:
+      - shared-data:/data
+    restart: always
+
+  python-analyzer:
+    build: ./python_analyzer
+    volumes:
+      - shared-data:/data
+    restart: always
+
+volumes:
+  shared-data:
