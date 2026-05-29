@@ -1,3 +1,4 @@
-﻿pyarrow
+﻿streamlit
+kafka-python
 polars
-streamlit
+pyarrow
