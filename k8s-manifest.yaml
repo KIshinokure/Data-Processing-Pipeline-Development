@@ -1,0 +1,38 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-collector
+  template:
+    metadata:
+      labels:
+        app: go-collector
+    spec:
+      containers:
+      - name: go-collector
+        image: industrial_monitoring-go-collector:latest
+        ports:
+        - containerPort: 8081
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: go-collector-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: go-collector
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
