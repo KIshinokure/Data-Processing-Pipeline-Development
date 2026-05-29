@@ -4,6 +4,7 @@ go 1.25.0
 
 require (
 	github.com/apache/arrow/go/v14 v14.0.2
+	github.com/segmentio/kafka-go v0.4.51
 	go.etcd.io/etcd/client/v3 v3.6.11
 	google.golang.org/grpc v1.81.1
 )
