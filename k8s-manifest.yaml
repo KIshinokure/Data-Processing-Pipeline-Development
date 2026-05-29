@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: go-collector
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: go-collector
@@ -17,6 +17,18 @@ spec:
         image: industrial_monitoring-go-collector:latest
         ports:
         - containerPort: 8081
+        env:
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
 ---
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -27,8 +39,8 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: go-collector
-  minReplicas: 1
-  maxReplicas: 3
+  minReplicas: 2
+  maxReplicas: 5
   metrics:
   - type: Resource
     resource:
